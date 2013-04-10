@@ -376,6 +376,15 @@ end
 
 convert(::Type{RepString}, s::String) = RepString(s,1)
 
+function repeat(s::ByteString, r::Integer)
+    d = s.data; n = length(d)
+    out = Array(Uint8, n*r)
+    for i=1:r
+        copy!(out, 1+(i-1)*n, d, 1, n)
+    end
+    convert(typeof(s), out)
+end
+
 ## reversed strings without data movement ##
 
 immutable RevString <: String
@@ -850,7 +859,7 @@ shell_escape(cmd::String, args::String...) =
 
 ## interface to parser ##
 
-function parse(str::String, pos::Int, greedy::Bool, err::Bool)
+function parse(str::String, pos::Int, greedy::Bool=true, err::Bool=true)
     # returns (expr, end_pos). expr is () in case of parse error.
     ex, pos = ccall(:jl_parse_string, Any,
                     (Ptr{Uint8}, Int32, Int32),
@@ -867,8 +876,6 @@ function parse(str::String, pos::Int, greedy::Bool, err::Bool)
     end
     ex, pos+1 # C is zero-based, Julia is 1-based
 end
-parse(str::String, pos::Int, greedy::Bool) = parse(str, pos, greedy, true)
-parse(str::String, pos::Int) = parse(str, pos, true)
 
 function parse(str::String)
     ex, pos = parse(str, start(str))

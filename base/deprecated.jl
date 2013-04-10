@@ -174,6 +174,17 @@ export PipeString
 @deprecate  parse_hex(s)        parseint(s,16)
 @deprecate  wait_accept         accept
 @deprecate  findn_nzs           findnz
+@deprecate  DivideByZeroError   DivideError
+@deprecate  cartesian_map       cartesianmap
+@deprecate  check_bounds        checkbounds
+@deprecate  system_error        systemerror
+@deprecate  seek_end            seekend
+@deprecate  addprocs_ssh_tunnel(m) addprocs(m, tunnel=true)
+@deprecate  addprocs_ssh        addprocs
+@deprecate  addprocs_local      addprocs
+@deprecate  remote_call         remotecall
+@deprecate  remote_call_fetch   remotecall_fetch
+@deprecate  remote_call_wait    remotecall_wait
 
 @deprecate  expr(hd, a...)              Expr(hd, a...)
 @deprecate  expr(hd, a::Array{Any,1})   Expr(hd, a...)
