@@ -186,5 +186,7 @@ function writedlm(fname::String, a::Matrix, dlm::Char)
     end
 end
 
+writedlm(fname::String, a::Vector, dlm::Char) = writedlm(fname, reshape(a,length(a),1), dlm)
+
 writedlm(io, a) = writedlm(io, a, '\t')
 writecsv(io, a) = writedlm(io, a, ',')
